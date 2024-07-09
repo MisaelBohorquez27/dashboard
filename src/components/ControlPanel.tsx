@@ -36,9 +36,9 @@ export default function ControlPanel() {
         let idx = parseInt(event.target.value)
         setSelected(idx);
 
-        {/* Modificación de la referencia */ }
+         {/* Modificación de la referencia */}
 
-        if (descriptionRef.current !== null) {
+         if (descriptionRef.current !== null) {
             descriptionRef.current.innerHTML = (idx >= 0) ? items[idx]["description"] : ""
         }
 
@@ -82,7 +82,7 @@ export default function ControlPanel() {
             {/* Muestra la descripción de la variable seleccionada */}
 
             <Typography ref={descriptionRef} mt={2} component="p" color="text.secondary" />
-
+           
         </Paper>
 
 
