@@ -23,7 +23,7 @@ export default function Summary() {
                         05:19:08
                     </Typography>
                     <Typography color="text.secondary" sx={{ flex: 1 }}>
-                    	en 17 Junio, 2024
+                        en 17 Junio, 2024
                     </Typography>
                 </CardContent>
             </CardActionArea>

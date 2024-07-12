@@ -3,15 +3,11 @@ import Paper from '@mui/material/Paper';
 
 export default function WeatherChart() {
 
-    {/* Configuración */}
-
-    let options = {
+    const options = {
         title: "Precipitación, Humedad y Nubosidad vs Hora",
         curveType: "function",
         legend: { position: "right" },
     }
-
-    {/* Datos de las variables meteorológicas */}
 
     const data = [
         ["Hora", "Precipitación", "Humedad", "Nubosidad"],
@@ -23,8 +19,6 @@ export default function WeatherChart() {
         ["18:00", 6, 64, 84],
         ["21:00", 5, 77, 99]
     ];
-
-    {/* JSX */}
 
     return (
         <Paper
@@ -40,7 +34,7 @@ export default function WeatherChart() {
                 width="100%"
                 height="400px"
                 options={options}
-        />
+            />
         </Paper>
     )
 }

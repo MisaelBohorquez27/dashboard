@@ -1,40 +1,30 @@
 import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 
-
 interface Config {
-    title?: String;
-    subtitle?: String;
-    value: Number; 
+    title?: string;
+    subtitle?: string;
+    value: number;
 }
 
-
-export default function Indicator(config: Config) {  /* escrito y importado*/
-	return (
-        <>
-            
-            {config.title}<br/>
-            {config.value.toString()}<br/>
-            {config.subtitle}
-
-            <Paper
+export default function Indicator({ title, subtitle, value }: Config) {
+    return (
+        <Paper
             sx={{
-              p: 2,
-              display: 'flex',
-              flexDirection: 'column'
+                p: 2,
+                display: 'flex',
+                flexDirection: 'column'
             }}
-          >
+        >
             <Typography component="h2" variant="h6" color="primary" gutterBottom>
-                {config.title} 
+                {title}
             </Typography>
             <Typography component="p" variant="h4">
-                {config.value.toString()}
+                {value}
             </Typography>
             <Typography color="text.secondary" sx={{ flex: 1 }}>
-                {config.subtitle}
+                {subtitle}
             </Typography>
-        </Paper> 
-            
-        </>
+        </Paper>
     )
 }

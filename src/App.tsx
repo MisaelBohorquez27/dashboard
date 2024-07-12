@@ -7,11 +7,16 @@ import BasicTable from './components/BasicTable';
 import WeatherChart from './components/WeatherChart';
 import ControlPanel from './components/ControlPanel';
 
+interface Row {
+  rangeHours: string;
+  windDirection: string;
+}
+
 function App() {
 
   // Variable de estado y función de actualización
-  const [indicators, setIndicators] = useState([]);
-  const [rowsTable, setRowsTable] = useState([]);
+  const [indicators, setIndicators] = useState<JSX.Element[]>([]);
+  const [rowsTable, setRowsTable] = useState<Row[]>([]);
 
   // Hook: useEffect
   useEffect(() => {
@@ -49,26 +54,26 @@ function App() {
 
       // XML Parser
       const parser = new DOMParser();
-      const xml = parser.parseFromString(savedTextXML, "application/xml");
+      const xml = parser.parseFromString(savedTextXML || "", "application/xml");
 
       // Arreglo para agregar los resultados
-      let dataToIndicators = [];
+      let dataToIndicators: Array<[string, string, string]> = [];
 
       // Análisis, extracción y almacenamiento del contenido del XML en el arreglo de resultados
       let location = xml.getElementsByTagName("location")[1];
 
-      let geobaseid = location.getAttribute("geobaseid");
+      let geobaseid = location?.getAttribute("geobaseid") || "N/A";
       dataToIndicators.push(["Location", "geobaseid", geobaseid]);
 
-      let latitude = location.getAttribute("latitude");
+      let latitude = location?.getAttribute("latitude") || "N/A";
       dataToIndicators.push(["Location", "Latitude", latitude]);
 
-      let longitude = location.getAttribute("longitude");
+      let longitude = location?.getAttribute("longitude") || "N/A";
       dataToIndicators.push(["Location", "Longitude", longitude]);
 
       // Renderice el arreglo de resultados en un arreglo de elementos Indicator
       let indicatorsElements = dataToIndicators.map((element, index) => (
-        <Indicator key={index} title={element[0]} subtitle={element[1]} value={element[2]} />
+        <Indicator key={index} title={element[0] || ""} subtitle={element[1] || ""} value={parseFloat(element[2]) || 0} />
       ));
 
       // Modificación de la variable de estado mediante la función de actualización
@@ -77,9 +82,9 @@ function App() {
       // 2. Procese los resultados de acuerdo con el diseño anterior.
       // Revise la estructura del documento XML para extraer los datos necesarios.
       let arrayObjects = Array.from(xml.getElementsByTagName("time")).map((timeElement) => {
-        let rangeHours = timeElement.getAttribute("from").split("T")[1] + " - " + timeElement.getAttribute("to").split("T")[1];
-        let windDirection = timeElement.getElementsByTagName("windDirection")[0].getAttribute("deg") + " " + timeElement.getElementsByTagName("windDirection")[0].getAttribute("code");
-        return { "rangeHours": rangeHours, "windDirection": windDirection };
+        let rangeHours = (timeElement.getAttribute("from") || "").split("T")[1] + " - " + (timeElement.getAttribute("to") || "").split("T")[1];
+        let windDirection = (timeElement.getElementsByTagName("windDirection")[0].getAttribute("deg") || "") + " " + (timeElement.getElementsByTagName("windDirection")[0].getAttribute("code") || "");
+        return { rangeHours: rangeHours, windDirection: windDirection };
       });
 
       arrayObjects = arrayObjects.slice(0, 8);
